@@ -128,6 +128,13 @@ body {
     display: none; /* Hidden by default */
 }
 
+.credits {
+    text-align: center;
+    font-size: 0.8em;
+    color: #bdc3c7;
+    margin-top: 15px;
+}
+
 /* --- Media Query for smaller screens (e.g., phones) --- */
 @media (max-width: 768px) {
     .calculator-container {
@@ -172,5 +179,10 @@ body {
 
     .result-item {
         font-size: 0.85em;
+    }
+
+    .credits {
+        font-size: 0.75em;
+        margin-top: 10px;
     }
 }
