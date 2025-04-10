@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trading Calculator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="calculator-container">
+        <div class="calculator">
+            <h2>Trading Calculator</h2>
+            <div class="input-group">
+                <label for="positionType">Position Type:</label>
+                <select id="positionType">
+                    <option value="long">Long</option>
+                    <option value="short">Short</option>
+                </select>
+            </div>
+            <div class="input-group">
+                <label for="initialCapital">Initial Capital:</label>
+                <input type="number" id="initialCapital" placeholder="Enter amount">
+            </div>
+            <div class="input-group">
+                <label for="riskPreferencePercent">Risk Preference (%):</label>
+                <input type="number" id="riskPreferencePercent" placeholder="Enter percentage">
+            </div>
+            <div class="input-group">
+                <label for="entryPrice">Entry Price:</label>
+                <input type="number" id="entryPrice" placeholder="Enter price">
+            </div>
+            <div class="input-group">
+                <label for="takeProfitPrice">Take Profit Price:</label>
+                <input type="number" id="takeProfitPrice" placeholder="Enter price">
+            </div>
+            <button id="calculateBtn">Calculate</button>
+            <div id="error" class="error"></div>
+        </div>
+        <div id="results" class="results">
+            <h3>Calculation Results</h3>
+            <div class="result-item">
+                <label>Possible Loss:</label>
+                <span id="possibleLoss"></span>
+            </div>
+            <div class="result-item">
+                <label>Profit Amount:</label>
+                <span id="profitAmount"></span>
+            </div>
+            <div class="result-item">
+                <label>Stop Loss Price:</label>
+                <span id="stopLossPrice"></span>
+            </div>
+            <h4>Required Margin</h4>
+            <div class="result-item">
+                <label>2x:</label>
+                <span id="margin2x"></span>
+            </div>
+            <div class="result-item">
+                <label>3x:</label>
+                <span id="margin3x"></span>
+            </div>
+            <div class="result-item">
+                <label>5x:</label>
+                <span id="margin5x"></span>
+            </div>
+            <div class="result-item">
+                <label>10x:</label>
+                <span id="margin10x"></span>
+            </div>
+            <div class="result-item">
+                <label>30x:</label>
+                <span id="margin30x"></span>
+            </div>
+            <div class="result-item">
+                <label>50x:</label>
+                <span id="margin50x"></span>
+            </div>
+            <div class="result-item">
+                <label>100x:</label>
+                <span id="margin100x"></span>
+            </div>
+            <div class="result-item">
+                <label>125x:</label>
+                <span id="margin125x"></span>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
