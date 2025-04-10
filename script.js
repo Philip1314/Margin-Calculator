@@ -17,7 +17,9 @@ document.getElementById('calculateBtn').addEventListener('click', function() {
     const margin125xEl = document.getElementById('margin125x');
     const profitAmountEl = document.getElementById('profitAmount');
     const stopLossPriceEl = document.getElementById('stopLossPrice');
-    const possibleLossEl = document.getElementById('possibleLoss'); // Get possible loss element
+    const stopLossPercentDisplayEl = document.getElementById('stopLossPercentDisplay'); // Get the element for SL percentage
+    const possibleLossEl = document.getElementById('possibleLoss');
+    const positionSizeEl = document.getElementById('positionSize');
     const errorDiv = document.getElementById('error');
     const resultsDiv = document.getElementById('results');
 
@@ -65,7 +67,7 @@ document.getElementById('calculateBtn').addEventListener('click', function() {
     // Calculate loss per trade in currency
     lossPerTrade = initialCapital * (preferredRiskPercent / 100);
 
-    // --- Calculate Take Profit Percentage ---
+    // --- Calculate Take Profit Percentage and Stop Loss Price ---
     if (positionType === 'long') {
         if (takeProfitPrice <= entryPrice) {
             errorDiv.textContent = 'Error: For LONG, Take Profit Price must be higher than Entry Price.';
@@ -75,7 +77,6 @@ document.getElementById('calculateBtn').addEventListener('click', function() {
         takeProfitPercent = ((takeProfitPrice - entryPrice) / entryPrice) * 100;
         stopLossPercent = takeProfitPercent / 2; // Assuming 1:2 risk/reward
         stopLossPrice = entryPrice * (1 - (stopLossPercent / 100));
-        profitAmount = positionSize * (takeProfitPercent / 100); // Profit will be calculated later with position size
     } else if (positionType === 'short') {
         if (takeProfitPrice >= entryPrice) {
             errorDiv.textContent = 'Error: For SHORT, Take Profit Price must be lower than Entry Price.';
@@ -85,7 +86,6 @@ document.getElementById('calculateBtn').addEventListener('click', function() {
         takeProfitPercent = ((entryPrice - takeProfitPrice) / entryPrice) * 100;
         stopLossPercent = takeProfitPercent / 2; // Assuming 1:2 risk/reward
         stopLossPrice = entryPrice * (1 + (stopLossPercent / 100));
-        profitAmount = positionSize * (takeProfitPercent / 100); // Profit will be calculated later with position size
     }
 
     // Calculate position size
@@ -103,9 +103,28 @@ document.getElementById('calculateBtn').addEventListener('click', function() {
     });
 
     // --- Display Results ---
-    possibleLossEl.textContent = lossPerTrade.toFixed(2); // Display possible loss
+    positionSizeEl.textContent = positionSize.toFixed(2);
+    possibleLossEl.textContent = lossPerTrade.toFixed(2);
     profitAmountEl.textContent = profitAmount.toFixed(2);
     stopLossPriceEl.textContent = stopLossPrice; // No rounding
+
+    let calculatedStopLossPercent;
+    if (positionType === 'long') {
+        calculatedStopLossPercent = ((entryPrice - stopLossPrice) / entryPrice) * 100;
+    } else if (positionType === 'short') {
+        calculatedStopLossPercent = ((stopLossPrice - entryPrice) / entryPrice) * 100;
+    }
+
+    // Directly set the innerHTML of the stopLossPriceEl
+    if (stopLossPriceEl) {
+        stopLossPriceEl.innerHTML = `${stopLossPrice} <span id="stopLossPercentDisplay">(${calculatedStopLossPercent.toFixed(2)}%)</span>`;
+        const checkElement = document.getElementById('stopLossPercentDisplay');
+        if (checkElement) {
+            console.log("Stop Loss Percent Display Element Found and Text Set.");
+        } else {
+            console.error("Error: stopLossPercentDisplay element still not found after setting innerHTML.");
+        }
+    }
 
     // Display margin results with check against initial capital
     const marginElements = {
